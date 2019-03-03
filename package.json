@@ -28,7 +28,7 @@
     "url": "https://github.com/jchip/munchy.git"
   },
   "devDependencies": {
-    "electrode-archetype-njs-module-dev": "^3.0.0"
+    "@xarc/module-dev": "^1.0.0"
   },
   "nyc": {
     "all": true,
