@@ -1,0 +1,54 @@
+{
+  "name": "munchy",
+  "version": "1.0.0",
+  "description": "A producer Node stream for draining different data, including Readable streams",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "clap check"
+  },
+  "keywords": [
+    "node",
+    "stream",
+    "producer",
+    "drain",
+    "draining",
+    "multiple",
+    "different",
+    "data",
+    "buffer",
+    "string"
+  ],
+  "author": "Joel Chen",
+  "license": "Apache-2.0",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jchip/munchy.git"
+  },
+  "devDependencies": {
+    "electrode-archetype-njs-module-dev": "^3.0.0"
+  },
+  "nyc": {
+    "all": true,
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "exclude": [
+      "coverage",
+      "*clap.js",
+      "gulpfile.js",
+      "dist",
+      "test"
+    ],
+    "check-coverage": true,
+    "statements": 100,
+    "branches": 100,
+    "functions": 100,
+    "lines": 100,
+    "cache": true
+  }
+}
