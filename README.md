@@ -46,7 +46,8 @@ munchy.munch(...sources)
 | --------- | ----------------------------------- |
 | `sources` | variadic params of sources to munch |
 
-To end and terminate `munchy`:
+
+- To end and terminate `munchy`:
 
 ```js
 munchy.munch(null)
