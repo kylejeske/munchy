@@ -28,7 +28,8 @@
     "url": "https://github.com/jchip/munchy.git"
   },
   "devDependencies": {
-    "@xarc/module-dev": "^1.0.0"
+    "@xarc/module-dev": "^1.0.0",
+    "run-verify": "^1.0.0"
   },
   "nyc": {
     "all": true,
