@@ -93,4 +93,21 @@ describe("munchy", function() {
       }, "test")
     );
   });
+
+  it("should error if a source stream emit error w/o Error object", () => {
+    const munchy = new Munchy();
+
+    const p = new PassThrough();
+    drainIt(munchy);
+    munchy.munch(p);
+
+    return asyncVerify(
+      expectErrorHas(next => {
+        munchy.on("error", next);
+        munchy.on("draining", () => {
+          process.nextTick(() => p.emit("error"));
+        });
+      }, "source stream emitted error")
+    );
+  });
 });
