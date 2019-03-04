@@ -53,9 +53,11 @@ munchy.munch(...sources)
 munchy.munch(null)
 ```
 
-# Hapi Demo
+# Demos
 
-<https://github.com/jchip/hapi-stream-sample>
+- Hapi - <https://github.com/jchip/hapi-stream-sample>
+- Koa - <https://github.com/jchip/koa-stream-sample>
+- express - <https://github.com/jchip/express-stream-sample>
 
 # License
 
