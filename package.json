@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@xarc/module-dev": "^1.0.0",
-    "run-verify": "^1.0.0"
+    "run-verify": "^1.0.1"
   },
   "nyc": {
     "all": true,

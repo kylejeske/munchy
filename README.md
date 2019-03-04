@@ -47,10 +47,26 @@ munchy.munch(...sources)
 | `sources` | variadic params of sources to munch |
 
 
-- To end and terminate `munchy`:
+- Returns `this`.
+
+- To end and terminate `munchy` stream:
 
 ```js
 munchy.munch(null)
+```
+
+# Events
+
+Munchy emits the following custom events:
+
+| name       | description                        | payload      |
+| ---------- | ---------------------------------- | ------------ |
+| `draining` | starting to drain a stream source. | `{ stream }` |
+
+ie:
+
+```js
+munchy.on("draining", ({ stream }) => {});
 ```
 
 # Demos

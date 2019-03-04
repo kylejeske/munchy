@@ -3,7 +3,7 @@
 const Munchy = require("../..");
 const fs = require("fs");
 const { PassThrough } = require("stream");
-const { asyncVerify, expectError } = require("run-verify");
+const { asyncVerify, expectErrorHas, expectErrorToBe } = require("run-verify");
 
 describe("munchy", function() {
   const drainIt = munchy => {
@@ -70,9 +70,10 @@ describe("munchy", function() {
     drainIt(munchy);
     return asyncVerify(
       next => munchy.on("end", next),
-      () => {
-        expect(() => munchy.munch("test")).to.throw("called after destroy");
-      }
+      expectErrorHas(next => {
+        munchy.on("error", next);
+        munchy.munch("test");
+      }, "_read called after destroy")
     );
   });
 
@@ -82,14 +83,14 @@ describe("munchy", function() {
     const p = new PassThrough();
     drainIt(munchy);
     munchy.munch(p);
+
     return asyncVerify(
-      expectError(next => {
+      expectErrorToBe(next => {
         munchy.on("error", next);
-        p.emit("error", new Error("test"));
-      }),
-      err => {
-        expect(err.message).to.equal("test");
-      }
+        munchy.on("draining", () => {
+          process.nextTick(() => p.emit("error", new Error("test")));
+        });
+      }, "test")
     );
   });
 });
