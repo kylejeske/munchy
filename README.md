@@ -28,7 +28,7 @@ munchy.pipe(process.stdout);
 ## constructor
 
 ```js
-Munchy(opts, ...sources)
+Munchy(opts, ...sources);
 ```
 
 | name      | description                         |
@@ -39,29 +39,30 @@ Munchy(opts, ...sources)
 ## munch
 
 ```js
-munchy.munch(...sources)
+munchy.munch(...sources);
 ```
 
 | name      | description                         |
 | --------- | ----------------------------------- |
 | `sources` | variadic params of sources to munch |
 
-
 - Returns `this`.
 
 - To end and terminate `munchy` stream:
 
 ```js
-munchy.munch(null)
+munchy.munch(null);
 ```
 
 # Events
 
 Munchy emits the following custom events:
 
-| name       | description                        | payload      |
-| ---------- | ---------------------------------- | ------------ |
-| `draining` | starting to drain a stream source. | `{ stream }` |
+| name       | description                          | payload      |
+| ---------- | ------------------------------------ | ------------ |
+| `draining` | starting to drain a stream source.   | `{ stream }` |
+| `drained`  | done draining a stream source.       | `{ stream }` |
+| `munched`  | all sources munched, ready for more. | `{ stream }` |
 
 ie:
 
@@ -79,7 +80,6 @@ munchy.on("draining", ({ stream }) => {});
 
 Licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
-
 ---
 
-[options for Node Readable stream]: https://nodejs.org/api/stream.html#stream_new_stream_readable_options
+[options for node readable stream]: https://nodejs.org/api/stream.html#stream_new_stream_readable_options
