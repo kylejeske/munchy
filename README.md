@@ -62,7 +62,7 @@ Munchy emits the following custom events:
 | ---------- | ------------------------------------ | ------------ |
 | `draining` | starting to drain a stream source.   | `{ stream }` |
 | `drained`  | done draining a stream source.       | `{ stream }` |
-| `munched`  | all sources munched, ready for more. | `{ stream }` |
+| `munched`  | all sources munched, ready for more. |              |
 
 ie:
 
