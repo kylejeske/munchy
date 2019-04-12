@@ -54,6 +54,16 @@ describe("munchy", function() {
     expect(munchy._sources).to.deep.equal([]);
   });
 
+  it("should only reset non empty sources from destroy", () => {
+    const munchy = new Munchy();
+    let reset;
+    munchy._resetSources = () => {
+      reset = true;
+    };
+    munchy.destroy();
+    expect(reset).to.equal(undefined);
+  });
+
   it("should reset sources if they are all drained", () => {
     const foo = fs.createReadStream("test/fixtures/foo.txt");
     const bar = fs.createReadStream("test/fixtures/bar.txt");
