@@ -16,6 +16,13 @@ describe("munchy", function() {
     return { data, drain };
   };
 
+  it("should not setup read trigger if no sources", () => {
+    const munchy = new Munchy();
+    munchy._started = true;
+    munchy._triggerRead();
+    expect(munchy._triggered).to.equal(false);
+  });
+
   it("should drain fs read stream, string, and buffer", () => {
     const munchy = new Munchy(
       {},
@@ -33,12 +40,16 @@ describe("munchy", function() {
     munchy.on("end", () => {
       end = true;
     });
+
     munchy.on("drained", () => {
       drained++;
     });
 
     return asyncVerify(
-      next => munchy.on("close", next),
+      next =>
+        munchy.on("close", () => {
+          next();
+        }),
       () => {
         expect(end, "didn't get end event before close event").to.be.true;
         const output = data.map(x => x.toString());
@@ -47,6 +58,68 @@ describe("munchy", function() {
         expect(drained).to.equal(2);
       }
     );
+  });
+
+  it("should stop pushing if push returns false", done => {
+    const munchy = new Munchy();
+    // trick it to think reading's started
+    munchy._started = true;
+    const bufSize = 10 * 1024;
+    // pump a ton of data to it
+    munchy.munch(
+      Buffer.alloc(bufSize),
+      Buffer.alloc(bufSize),
+      Buffer.alloc(bufSize),
+      Buffer.alloc(bufSize)
+    );
+    setTimeout(() => {
+      try {
+        expect(munchy._moreSources()).to.equal(true);
+        done();
+      } catch (err) {
+        done(err);
+      }
+    }, 20);
+  });
+
+  it("should stop pushing draining data if push returns false", done => {
+    const munchy = new Munchy();
+    // trick it to think reading's started
+    munchy._started = true;
+    const munchy2 = new Munchy();
+    const bufSize = 10 * 1024;
+    // pump a ton of data to it
+    munchy2.munch(
+      Buffer.alloc(bufSize),
+      Buffer.alloc(bufSize),
+      Buffer.alloc(bufSize),
+      Buffer.alloc(bufSize)
+    );
+    munchy.munch(munchy2, "a", "b");
+
+    setTimeout(() => {
+      try {
+        expect(munchy._draining._index).to.equal(2);
+        expect(munchy._draining.hasMore()).to.equal(true);
+        done();
+      } catch (err) {
+        done(err);
+      }
+    }, 20);
+  });
+
+  it("should handle _read being called multiple times", () => {
+    const munchy = new Munchy();
+    // trick it to think reading's started
+    munchy._started = true;
+    let push = false;
+    munchy.push = () => {
+      expect(push).to.equal(false);
+      push = true;
+      munchy._read();
+      push = false;
+    };
+    munchy.munch("a", "b", "c");
   });
 
   it("should initialize sources to []", () => {

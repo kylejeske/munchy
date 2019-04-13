@@ -4,7 +4,8 @@
   "description": "A producer Node stream for draining different data, including Readable streams",
   "main": "lib/index.js",
   "scripts": {
-    "test": "clap check"
+    "test": "clap test",
+    "coverage": "clap check"
   },
   "keywords": [
     "node",
