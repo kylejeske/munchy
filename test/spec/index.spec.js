@@ -219,6 +219,33 @@ describe("munchy", function() {
     );
   });
 
+  it("should use handle stream error if a source stream error", () => {
+    const munchy = new Munchy({
+      handleStreamError: err => {
+        return { result: err.message, remit: false };
+      }
+    });
+
+    const p = new PassThrough();
+    const output = drainIt(munchy);
+    munchy.munch(p, null);
+
+    return asyncVerify(
+      next => {
+        munchy.on("end", next);
+        munchy.on("draining", () => {
+          process.nextTick(() => {
+            p.push("oops");
+            p.emit("error", new Error("test"));
+          });
+        });
+      },
+      () => {
+        expect(output.data.map(x => x.toString()).join("-")).to.equal("oops-test");
+      }
+    );
+  });
+
   it("should error if a source stream emit error w/o Error object", () => {
     const munchy = new Munchy();
 

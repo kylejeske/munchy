@@ -36,6 +36,31 @@ Munchy(opts, ...sources);
 | `opts`    | [options for Node Readable stream]  |
 | `sources` | variadic params of sources to munch |
 
+Munchy specific options:
+
+| name                | description                                          |
+| ------------------- | ---------------------------------------------------- |
+| `handleStreamError` | callback to handle error from a stream being drained |
+
+`handleStreamError` should take the error object and return an object with these fields:
+
+| name     | description                                                                                                          |
+| -------- | -------------------------------------------------------------------------------------------------------------------- |
+| `result` | string data to add to the output                                                                                     |
+| `remit`  | Set to `false` and munchy will continue without destroying itself, else it emits the error again and stop processing |
+
+If `handleStreamError` returns a falsy value, then Munchy will emit the error and destroys itself.
+
+For example:
+
+```js
+const munchy = new Munchy({
+  handleStreamError: err => {
+    return { result: err.stack, remit: false };
+  }
+});
+```
+
 ## munch
 
 ```js
