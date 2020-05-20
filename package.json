@@ -1,6 +1,6 @@
 {
   "name": "munchy",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A producer Node stream for draining different data, including Readable streams",
   "main": "lib/index.js",
   "scripts": {
