@@ -5,7 +5,7 @@ const fs = require("fs");
 const { PassThrough } = require("stream");
 const { asyncVerify, expectErrorHas, expectErrorToBe } = require("run-verify");
 
-describe("munchy", function() {
+describe("munchy", function () {
   const drainIt = munchy => {
     const data = [];
     const drain = new PassThrough();
@@ -197,7 +197,7 @@ describe("munchy", function() {
       next => munchy.on("end", next),
       expectErrorHas(next => {
         munchy.on("error", next);
-        munchy.munch("test");
+        setTimeout(() => munchy.munch("test"), 10);
       }, "_read called after destroy")
     );
   });
@@ -261,5 +261,11 @@ describe("munchy", function() {
         });
       }, "source stream emitted error")
     );
+  });
+
+  it("should clear sources when destroy", () => {
+    const munchy = new Munchy("a", "b", "c");
+    munchy.destroy();
+    expect(munchy._sources.length).to.equal(0);
   });
 });
