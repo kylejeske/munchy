@@ -12,11 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3.0.0
+        with:
+          # Version of pnpm to install
+          version: 8.15.3 # optional
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm test
+      - run: pnpm install
+      - run: pnpm run test
 
   publish-npm:
     needs: build
@@ -27,7 +31,7 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm publish
+      - run: pnpm install
+      - run: npm publish --dry-run
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
