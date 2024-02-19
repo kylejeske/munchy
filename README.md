@@ -1,4 +1,4 @@
-# munchy
+# munchy (@xarc/core-utils-munchy)
 
 A producer Node stream for draining different data, including Readable streams.
 
@@ -9,7 +9,7 @@ $ npm i --save @xarc/core-utils-munchy
 examples:
 
 ```js
-const Munchy = require("munchy");
+const Munchy = require("@xarc/core-utils-munchy");
 const munchy = new Munchy();
 munchy.munch("hello world", fs.createReadStream("blah"), "bye bye");
 munchy.munch(null); // null terminates it
@@ -17,7 +17,7 @@ munchy.pipe(process.stdout);
 ```
 
 ```js
-const Munchy = require("munchy");
+const Munchy = require("@xarc/core-utils-munchy");
 const munchy = new Munchy({}, fs.createReadStream("foo"), fs.createReadStream("bar"));
 munchy.munch(fs.createReadStream("blah"), "bye bye", null); // null terminates it
 munchy.pipe(process.stdout);
