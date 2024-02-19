@@ -1,6 +1,6 @@
 {
-  "name": "munchy",
-  "version": "1.0.9",
+  "name": "@xarc/core-utils-munchy",
+  "version": "1.0.10",
   "description": "A producer Node stream for draining different data, including Readable streams",
   "main": "lib/index.js",
   "scripts": {
@@ -18,6 +18,12 @@
     "data",
     "buffer",
     "string"
+  ],
+  "contributors": [
+    {
+      "email": "kyle.jeske@walmart.com",
+      "name": "Kyle Jeske"
+    }
   ],
   "author": "Joel Chen",
   "license": "Apache-2.0",
