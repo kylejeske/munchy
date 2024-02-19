@@ -3,7 +3,7 @@
 A producer Node stream for draining different data, including Readable streams.
 
 ```bash
-$ npm i --save munchy
+$ npm i --save @xarc/core-utils-munchy
 ```
 
 examples:
