@@ -36,6 +36,6 @@ jobs:
           # Version of pnpm to install
           version: 8.15.3 # optional
       - run: pnpm install
-      - run: npm publish
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
