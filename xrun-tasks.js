@@ -1,1 +1,2 @@
-require("@xarc/module-dev")();
+const tasks = require("@xarc/module-dev");
+tasks.loadTasks({});
